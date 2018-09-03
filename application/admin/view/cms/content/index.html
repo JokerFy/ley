@@ -1,0 +1,80 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<style>
+    .layui-td-center{text-align: center}
+</style>
+<body class="childrenBody">
+<div class="layui-row" style="margin-bottom: 10px">
+    <form class="layui-form layui-col-md12 x-so">
+        <div class="layui-input-inline">
+            <select name="position_id" id="select-push">
+                <option value="0">请选择推荐位进行推送</option>
+                {foreach $position as $vo}
+                <option value="{$vo.id}">{$vo.name}</option>
+                {/foreach}
+            </select>
+        </div>
+
+        <button id="finCms-push" class="layui-btn">推送</button>
+    </form>
+</div>
+<button class="layui-btn" onclick="layerForm('添加文章','add')"><i class="layui-icon"></i>添加</button>
+<button class="layui-btn  layui-btn-warm" id="button-listorder">更新排序
+</button>
+<div class="layui-form">
+    <table class="layui-table" id="tabodyform">
+        <thead>
+        <tr>
+            <th id="finCms-checkbox-all" width="10"><input type="checkbox" lay-skin="primary"/></th>
+            <th>ID</th>
+            <th>标题</th>
+            <th>栏目</th>
+            <th>封面图</th>
+            <th>时间</th>
+            <th>排序</th>
+            <th style="text-align: center">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $list as $vo}
+        <tr>
+            <td><input type="checkbox" lay-skin="primary" name="pushcheck" value="{$vo.id}"></td>
+            <td>{$vo.id}</td>
+            <td>{$vo.title}</td>
+            <td>{$vo.catid}</td>
+            <td>
+                <image style="width: 50px;height: 50px" src="{$vo.thumb}"></image>
+            </td>
+            <td>{$vo.create_time|date="Y-m-d",###}</td>
+            <td><input type="text" class="layui-input" name="listorder[{$vo.id}]" value="{$vo.listorder}"></td>
+            <td class="td-manage layui-td-center">
+                <a class="layui-btn layui-btn-sm" lay-event="edit" attr-id="{$vo.id}" onclick="layerForm('编辑','edit','','',this)">
+                    <i class="iconfont icon-edit"></i>编辑
+                </a>
+                <a class="layui-btn layui-btn-sm layui-btn-warm" lay-event="view" attr-id="{$vo.id}" onclick="layerForm('预览','edit','420','420',this)">
+                    <i class="layui-icon">&#xe705;</i>预览
+                </a>
+                <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del" attr-id="{$vo.id}" onclick="realDelete(this)">
+                    <i class="layui-icon">&#xe640;</i>删除
+                </a>
+            </td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    <div class="page">
+        <div>
+            {$pages}
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    var SCOPE = {
+        'edit_url': '/admin/cms.content/edit?id=',
+        'delete_url': '/admin/cms.content/delete',
+        'table':'news'
+    };
+</script>
+</body>

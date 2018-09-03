@@ -1,0 +1,79 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<style>
+    .layui-td-center{text-align: center}
+</style>
+<body class="childrenBody">
+
+<button class="layui-btn" onclick="layerForm('添加用户','add','420','420')"><i class="layui-icon"></i>添加</button>
+<div class="layui-form">
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>登录名</th>
+            <th>邮箱</th>
+            <th>角色</th>
+            <th>手机号</th>
+            <th>加入时间</th>
+            <th style="text-align: center">状态</th>
+            <th style="text-align: center">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $list as $vo}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.username}</td>
+            <td>{$vo.email}</td>
+            {if condition="$vo.id eq 1"}
+            <td>超级管理员</td>
+            {else/}
+            <td>{$vo.title}</td>
+            {/if}
+            <td>13548525858</td>
+            <td>{$vo.create_time|date="Y-m-d",###}</td>
+            <td class="td-status layui-td-center" >
+                {if condition="$vo.id neq 1"}
+                {if condition="$vo.id neq $adminInfo.id"}
+                <span class="layui-btn layui-btn-sm layui-btn-mini" attr-id="{$vo.id}" attr-status="{$vo.status}"
+                      onclick="changeStatus(this)">
+                    {if condition="$vo.status eq 1"}
+                    已启用
+                    {else/}
+                    已禁用
+                    {/if}
+                </span>
+                {/if}
+                {/if}
+            </td>
+            <td class="td-manage layui-td-center">
+                {if condition="$vo.id neq $adminInfo.id"}
+                <a class="layui-btn layui-btn-sm" lay-event="edit" attr-id="{$vo.id}" onclick="layerForm('编辑','edit','420','420',this)">
+                    <i class="iconfont icon-edit"></i>编辑
+                </a>
+                <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del" attr-id="{$vo.id}" onclick="relationDelete(this)">
+                    <i class="layui-icon">&#xe640;</i>删除
+                </a>
+                {/if}
+            </td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    <div class="page">
+        <div>
+            {$pages}
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    var SCOPE = {
+        'edit_url': '/admin/auth.admin/edit?id=',
+        'delete_url': '/admin/auth.admin/delete',
+        'model': 'admin'
+    };
+</script>
+</body>

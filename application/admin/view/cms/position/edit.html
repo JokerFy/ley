@@ -1,0 +1,47 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<style>
+    .layer-btn{text-align: right}
+</style>
+<body class="childrenBody">
+<form class="layui-form" id="finCms-form" style="padding: 20px 30px 0 0">
+    <input name="id" type="hidden" value="{$position.id}">
+    <div class="layui-form-item">
+        <label for="name" class="layui-form-label">
+            推荐位标题
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="name" name="name" required="" placeholder="请填写推荐位标题" lay-verify="required"
+                   autocomplete="off" class="layui-input" value="{$position.name}">
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">推荐位描述</label>
+        <div class="layui-input-block">
+            <textarea name="description" required="" lay-verify="required" placeholder="请输入内容" class="layui-textarea">{$position.description}</textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">推荐位状态</label>
+        <div class="layui-input-block">
+            <input type="radio" name="status" lay-skin="primary" value="1" title="开启" {if condition="$position.status eq 1"}checked{/if}>
+            <input type="radio" name="status" lay-skin="primary" value="0" title="关闭" >
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <button lay-submit lay-filter="lay-finCms-form" type="button" class="layui-btn">
+            提交
+        </button>
+    </div>
+</form>
+
+<script>
+    var SCOPE = {
+        'save_url': '/admin/cms.position/edit'
+    };
+
+</script>
+</body>

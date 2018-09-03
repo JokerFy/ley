@@ -1,0 +1,77 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+    <style type="text/css">
+        .layui-table td, .layui-table th{ text-align: center; }
+        .layui-table td{ padding:5px; }
+    </style>
+<body class="childrenBody">
+<form class="layui-form" id="finCms-form">
+    <table class="layui-table">
+        <colgroup>
+            <col width="20%">
+            <col width="50%">
+            <col>
+        </colgroup>
+        <thead>
+        <tr>
+            <th>参数说明</th>
+            <th>参数值</th>
+            <th>变量名</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>后台名称</td>
+            <td><input type="text" name="cmsName" {if condition="$basic neq null"}value="{$basic.cmsName}"{/if} class="layui-input cmsName" lay-verify="required" placeholder="请输入后台名称"></td>
+            <td>cmsName</td>
+        </tr>
+        <tr>
+            <td>站点标题</td>
+            <td><input type="text" name="title" value="" class="layui-input title" placeholder="请输入站点名称"></td>
+            <td>title</td>
+        </tr>
+        <tr>
+            <td>网站作者</td>
+            <td><input type="text" name="author" value="" class="layui-input author" placeholder="请输入开发作者"></td>
+            <td>author</td>
+        </tr>
+        <tr>
+            <td>网站首页</td>
+            <td><input type="text" name="homePage" value="" class="layui-input homePage" placeholder="请输入网站首页"></td>
+            <td>homePage</td>
+        </tr>
+        <tr>
+            <td>站点关键词</td>
+            <td><input type="text" name="keywords" value="" class="layui-input keywords" placeholder="请输入站点关键词"></td>
+            <td>keywords</td>
+        </tr>
+        <tr>
+            <td>版权信息</td>
+            <td><input type="text" name="powerby" value="" class="layui-input powerby" placeholder="请输入网站版权信息"></td>
+            <td>powerby</td>
+        </tr>
+        <tr>
+            <td>网站描述</td>
+            <td><textarea placeholder="请输入网站描述"class="layui-textarea description" name="description"></textarea></td>
+            <td>description</td>
+        </tr>
+        <tr>
+            <td>网站备案号</td>
+            <td><input type="text" name="record" value="" class="layui-input record" placeholder="请输入网站备案号"></td>
+            <td>record</td>
+        </tr>
+        </tbody>
+    </table>
+    <div class="layui-form-item" style="text-align: right;">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit="" type="button" lay-filter="lay-finCms-form">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    var SCOPE = {
+        'save_url':'/admin/sys/index'
+    }
+</script>
+</body>

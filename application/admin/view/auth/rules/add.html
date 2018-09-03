@@ -1,0 +1,75 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<body class="childrenBody">
+    <form class="layui-form layer-small-form" id="finCms-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限节点</label>
+            <div class="layui-input-inline">
+                <select name="pid">
+                    <option value="0">|-&#45;&#45;顶级权限&#45;&#45;</option>
+                    {foreach $field as $vo}
+                    <option value="{$vo['id']}">{$vo['title']}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">菜单类型</label>
+            <div class="layui-input-inline">
+                <select name="level">
+                    <option value="1">项目</option>
+                    <option value="2">菜单</option>
+                    <option value="3">模块</option>
+                    <option value="4">操作</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="title" class="layui-form-label">
+                权限名称
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="title" name="title" required="" placeholder="请填写权限名" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="name" class="layui-form-label">
+                权限标识
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="name" name="name" required="" placeholder="请填写权限标识" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="nav" class="layui-form-label">
+                导航名称
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="nav" name="nav" placeholder="请填写导航名称" required="" lay-verify="required"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label for="icon" class="layui-form-label">
+                图标
+            </label>
+            <div class="layui-input-inline">
+                <input type="text" id="icon" name="icon" value="layui-icon-set-sm"
+                       autocomplete="off" class="layui-input">
+            </div>
+        </div>
+
+        <div class="layui-form-item layer-btn">
+            <button lay-submit lay-filter="lay-finCms-form" type="button" class="layui-btn">
+                增加
+            </button>
+        </div>
+    </form>
+
+<script>
+    var SCOPE = {
+        'save_url':'/admin/auth.rules/add'
+    }
+</script>
+</body>

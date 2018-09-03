@@ -1,0 +1,54 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<style>
+    .layui-td-center{text-align: center}
+</style>
+<body class="childrenBody">
+
+<button class="layui-btn" onclick="layerForm('添加推荐位','add','450','450')"><i class="layui-icon"></i>添加</button>
+<div class="layui-form">
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>推荐位名称</th>
+            <th>推荐位描述</th>
+            <th>加入时间</th>
+            <th style="text-align: center">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $list as $vo}
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.name}</td>
+            <td>{$vo.description}</td>
+            <td>{$vo.create_time|date="y-m-d H:i:s",###}</td>
+            <td class="td-manage layui-td-center">
+                <a class="layui-btn layui-btn-sm" lay-event="edit" attr-id="{$vo.id}" onclick="layerForm('编辑','edit','420','420',this)">
+                    <i class="iconfont icon-edit"></i>编辑
+                </a>
+                <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del" attr-id="{$vo.id}" onclick="realDelete(this)">
+                    <i class="layui-icon">&#xe640;</i>删除
+                </a>
+            </td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    <div class="page">
+        <div>
+            {$pages}
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    var SCOPE = {
+        'edit_url': '/admin/cms.position/edit?id=',
+        'delete_url': '/admin/cms.position/delete',
+        'model': 'admin'
+    };
+</script>
+</body>

@@ -1,0 +1,60 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<body class="childrenBody">
+<form class="layui-form layui-form-pane" id="finCms-form">
+<input name="id" type="hidden" value="{$rule.id}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">上级权限</label>
+        <div class="layui-input-inline">
+            <select name="pid">
+                <option value="0">|---顶级权限--</option>
+                {foreach $selectlist as $vo}
+                <option value="{$vo.id}" {if condition="$vo['id'] eq $rule['pid']"}selected{/if}>{$vo['title']}</option>
+                {/foreach}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限名</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" value="{$rule.title}" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">权限标识</label>
+        <div class="layui-input-block">
+            <input type="text" name="name" required value="{$rule.name}"  lay-verify="required" placeholder="请填写权限标识" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">导航名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="nav" placeholder="请填写导航名称" value="{$rule.nav}" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label for="icon" class="layui-form-label">
+            图标
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="icon" name="icon"  {if condition="$rule.icon neq null"}value="{$rule.icon}" {else/}value="layui-icon-set-sm"{/if} autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item layer-btn">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="lay-finCms-form">立即提交</button>
+        </div>
+    </div>
+</form>
+
+</body>
+<script>
+    var SCOPE={
+        'save_url':'/admin/auth.rules/edit?id={$rule.id}'
+    }
+
+</script>

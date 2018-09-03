@@ -1,0 +1,88 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<style>
+    .layer-btn{text-align: right}
+</style>
+<body class="childrenBody">
+<script src="__STATIC__/js/kindeditor/kindeditor-all.js"></script>
+
+<form class="layui-form" id="finCms-form">
+    <input name="id" value="{$news.id}" type="hidden">
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" value="{$news.title}" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">短标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="small_title" value="{$news.small_title}" required  lay-verify="required" placeholder="请填写短标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">描述</label>
+        <div class="layui-input-block">
+            <input type="text" name="description" value="{$news.description}" required  lay-verify="required" placeholder="对文章内容描述" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">关键字</label>
+        <div class="layui-input-block">
+            <input type="text" name="keywords" value="{$news.keywords}" required  lay-verify="required" placeholder="请填写关键字" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属栏目</label>
+        <div class="layui-input-inline">
+            <select name="catid" lay-verify="required">
+                {volist name="webSiteMenu" id="sitenav"}
+                <option value="{$sitenav.id}" {if condition="$sitenav.id eq $news.id"}selected{/if}>{$sitenav.name}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">缩图</label>
+        <button type="button" class="layui-btn" id="test1">图片上传</button>
+        <div class="layui-upload-list" style="margin-left: 110px">
+            <img class="layui-upload-img" id="demo1" src="{$news.thumb}" width="100px" height="100px">
+            <input id="imgName" name="thumb" value="{$news.thumb}" type="hidden"/>
+            <p id="demoText"></p>
+        </div>
+    </div>
+
+    <div class="layui-form-item layui-form-text">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-block">
+            <textarea class="input js-editor" id="editor_fincms" name="content" rows="20" required  lay-verify="required">
+                {$news.content}
+            </textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="lay-finCms-form">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    var SCOPE={
+        'save_url':'/admin/cms.content/edit'
+    };
+    // 6.2
+    KindEditor.ready(function(K) {
+        window.editor = K.create('#editor_fincms',{
+            uploadJson : 'http://tp5cms.cn/api/v1/image/kindupload',
+            afterBlur : function(){this.sync();}, //
+        });
+    });
+</script>
+</body>

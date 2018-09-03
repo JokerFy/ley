@@ -1,0 +1,59 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<style>
+    .layer-btn{text-align: right}
+</style>
+<body class="childrenBody">
+<form class="layui-form" id="finCms-form" style="padding: 20px 30px 0 0">
+    <input name="id" value="{$admin.uid}" type="hidden">
+    <div class="layui-form-item">
+        <label class="layui-form-label">用户组选择</label>
+        <div class="layui-input-inline">
+            <select name="group_id" >
+                {volist name="groupList" id="vo"}
+                <option value="{$vo.id}" {if condition="$vo.id eq $admin.group_id"}selected{/if}>{$vo.title}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label for="username" class="layui-form-label">
+            登录名
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="username" name="username" value="{$admin.username}" required="" lay-verify="required"
+                   autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="L_email" class="layui-form-label">
+            邮箱
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="L_email" name="email" required="" lay-verify="email" value="{$admin.email}"
+                   autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="password" class="layui-form-label">
+            密码
+        </label>
+        <div class="layui-input-inline">
+            <input id="password" name="password" placeholder="密码" autocomplete="off" type="text" lay-verify="required"
+                   class="layui-input" oninput="if(this.value==''){this.type='text'}else(this.type='password')">
+        </div>
+    </div>
+    <div class="layui-form-item layer-btn">
+        <button class="layui-btn" lay-filter="lay-finCms-form" lay-submit="">
+            提交
+        </button>
+    </div>
+</form>
+
+<script>
+    var SCOPE = {
+        'save_url': '/admin/auth.admin/edit?id={$admin.uid}'
+    };
+
+</script>
+</body>
