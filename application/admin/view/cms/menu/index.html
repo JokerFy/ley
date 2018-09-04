@@ -1,0 +1,93 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<?php
+  $navs = model("Menu")->getNavMenus();
+foreach($navs as $item){
+if($item['parentid'] == 0){
+$level0[] = $item;
+}
+}
+
+foreach($navs as $items){
+foreach($level0 as $item){
+if($items['parentid'] == $item['id']  ){
+$level1[] = $items;
+}
+}
+}
+
+?>
+<style>
+    .layui-td-center{text-align: center}
+</style>
+<body class="childrenBody">
+<button class="layui-btn" onclick="layerForm('添加前端导航','add','400','400')"><i class="layui-icon"></i>添加</button>
+<button class="layui-btn  layui-btn-warm" id="button-listorder">更新排序
+</button>
+<div class="layui-form">
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th >ID</th>
+            <th>栏目名</th>
+            <th >排序</th>
+            <th >操作</th>
+        </tr>
+        </thead>
+        <tbody id="tabodyform">
+        {if condition="isset($level0)"}
+        {volist name="level0" id="navs"}
+        <tr cate-id='{$navs.id}' fid='0'>
+            <td>{$navs.id}</td>
+            <td>
+                <i class="layui-icon x-show" status='true'>&#xe623;</i>
+                {$navs.name}
+            </td>
+            <td><input type="text" class="layui-input x-sort" name="listorder[{$navs.id}]" value="{$navs.listorder}"></td>
+            <td class="td-manage">
+                <button class="layui-btn layui-btn layui-btn-xs"   attr-id="{$navs.id}" onclick="layerForm('编辑','edit','420','420',this)"><i
+                        class="layui-icon">&#xe642;</i>编辑
+                </button>
+                <button class="layui-btn layui-btn-warm layui-btn-xs" onclick="x_admin_show('添加','add')"><i
+                        class="layui-icon">&#xe642;</i>添加子栏目
+                </button>
+                <button class="layui-btn-danger layui-btn layui-btn-xs" attr-id="{$navs.id}" onclick="fakeDelete(this)"><i class="layui-icon">&#xe640;</i>删除
+                </button>
+            </td>
+        </tr>
+        {if condition="isset($level1)"}
+        {volist name="level1" id="nav"}
+        {if condition="$nav['parentid'] eq $navs['id']"}
+        <tr cate-id='{$nav.id}' fid='{$nav.parentid}'>
+            <td>{$nav.id}</td>
+            <td>
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                {$nav.name}
+            </td>
+            <td><input type="text" class="layui-input x-sort" name="listorder[{$nav.id}]" value="{$nav.listorder}"></td>
+            <td class="td-manage">
+                <button class="layui-btn layui-btn layui-btn-xs" onclick="layerForm('编辑','edit','420','420',this)" attr-id="{$nav.id}"><i
+                        class="layui-icon">&#xe642;</i>编辑
+                </button>
+                <button class="layui-btn-danger layui-btn layui-btn-xs" attr-id="{$nav.id}" onclick="realDelete(this)" href="javascript:;"><i class="layui-icon">&#xe640;</i>删除
+                </button>
+            </td>
+        </tr>
+        {/if}
+        {/volist}
+        {/if}
+        {/volist}
+        {/if}
+        </tbody>
+    </table>
+
+</div>
+
+
+<script>
+    var SCOPE = {
+        'edit_url': '/admin/cms.menu/edit?id=',
+        'delete_url': '/admin/cms.menu/delete',
+        'table': 'menu'
+    };
+</script>
+</body>

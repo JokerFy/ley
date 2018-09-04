@@ -1,50 +1,54 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: admin
- * Date: 2018/6/7
- * Time: 10:19
+ * User: finley
+ * Date: 2018/6/3
+ * Time: 22:13
  */
 
 namespace app\admin\controller\cms;
 
 use app\admin\controller\Base;
+use app\admin\model\Menu as MenuModel;
 use app\common\model\Common;
 use app\common\Params;
 use think\Db;
+use think\Request;
 
-class Position extends Base
+
+class Menu extends Base
 {
     public function _initialize()
     {
         parent::_initialize();
         $config = [
-            'table' => 'position',
-            'autoWriteTimestamp' => true
+            'table' => 'menu',
+            'autoWriteTimestamp' => false
         ];
         Common::init($config);
     }
 
+
     public function index()
     {
-        $list = Db::name('position')
-            ->where(['status' => 1])->paginate(10);
-        $pages = $list->render();
-        return $this->fetch('', ['list' => $list, 'pages' => $pages]);
+        return $this->fetch('');
     }
 
     public function add()
     {
         Common::addWithPost();
-        return $this->fetch('');
+        $parentMenu = Db::name('menu')->where('parentid', 0)->select();
+        return $this->fetch('', ['parentMenu' => $parentMenu]);
     }
 
     public function edit()
     {
         $id = Params::idParams();
         Common::editWithId();
-        $result = Db::name('position')->where('id', $id)->find();
-        return $this->fetch('', ['position' => $result]);
+        $result = MenuModel::get($id);
+        $parentMenu = Db::table('cms_menu')->where('parentid', 0)->select();
+        return $this->fetch('', ['menu' => $result, 'parentMenu' => $parentMenu]);
+
     }
 
 
@@ -52,4 +56,6 @@ class Position extends Base
     {
         Common::delWithId();
     }
+
 }
+

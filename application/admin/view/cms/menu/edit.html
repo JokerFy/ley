@@ -1,0 +1,43 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<style>
+    .layer-btn {
+        text-align: right
+    }
+</style>
+<body class="childrenBody">
+<form class="layui-form" id="finCms-form" style="padding: 20px 30px 0 0">
+    <div class="layui-form-item">
+        <label class="layui-form-label">菜单类型</label>
+        <div class="layui-input-inline">
+            <select name="parentid" lay-verify="required">
+                <option value="0">前台导航</option>
+                {volist name="parentMenu" id="Menu"}
+                <option value="{$Menu.id}">{$Menu.name}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label for="name" class="layui-form-label">
+            菜单名称
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="name" name="name" value="{$menu.name}"  required="" placeholder="请填写菜单名" lay-verify="required"
+                   autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <button lay-submit lay-filter="lay-finCms-form" type="button" class="layui-btn">
+            提交
+        </button>
+    </div>
+</form>
+
+<script>
+    var SCOPE = {
+        'save_url': '/admin/cms.menu/edit'
+    };
+
+</script>
+</body>
