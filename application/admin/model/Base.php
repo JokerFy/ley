@@ -21,4 +21,12 @@ class Base extends Model
         $this->admin = $admin;
         $this->adminId = $admin['id'];
     }
+
+    protected function  prefixImgUrl($value, $data){
+        $finalUrl = $value;
+        if($data['from'] == 1){
+            $finalUrl = config('secure.img_prefix').$value;
+        }
+        return $finalUrl;
+    }
 }

@@ -1,0 +1,64 @@
+{layout name="layout" replace="[__REPLACE__]" /}
+<style>
+    .layer-btn{text-align: right}
+</style>
+<body class="childrenBody">
+<form class="layui-form" id="finCms-form" style="padding: 20px 30px 0 0">
+    <input name="id" type="hidden" value="{$pcontent.id}">
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" value="{$pcontent.title}" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择推荐位</label>
+        <div class="layui-input-inline">
+            <select name="position_id" lay-verify="required">
+                {volist name="positions" id="position"}
+                <option value="{$position.id}">{$position.name}</option>
+                {/volist}
+            </select>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">缩图</label>
+        <button type="button" class="layui-btn" id="test1">图片上传</button>
+        <div class="layui-upload-list" style="margin-left: 110px">
+            <img class="layui-upload-img" src="{$pcontent.thumb}" id="demo1" width="100px" height="100px">
+            <input id="imgName" name="thumb" type="hidden"/>
+            <p id="demoText"></p>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">url</label>
+        <div class="layui-input-block">
+            <input type="text" name="url" required  value="{$pcontent.url}" lay-verify="required" placeholder="请填写url" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">文章id</label>
+        <div class="layui-input-block">
+            <input type="text" name="news_id" value="{$pcontent.news_id}" placeholder="如果和文章无关联可以不填写文章id" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn" lay-submit lay-filter="lay-finCms-form">立即提交</button>
+            <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+        </div>
+    </div>
+</form>
+
+<script>
+    var SCOPE = {
+        'save_url': '/admin/cms.pcontent/edit'
+    };
+
+</script>
+</body>

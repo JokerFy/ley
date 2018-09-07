@@ -14,8 +14,9 @@ use app\lib\exception\ParameterException;
 use app\lib\exception\SuccessNotify;
 use app\admin\model\Menu as Menu;
 use app\common\Params;
-use think\Request;
+use app\admin\model\Content as ContentModel;
 use think\Db;
+use think\Exception;
 
 class Content extends Base
 {
@@ -44,19 +45,38 @@ class Content extends Base
         return $this->fetch('', ['list' => $articleList, 'position' => $positions, 'pages' => $pages]);
     }
 
+    /**
+     * 避免查询时因为文章内容过大影响性能
+     * 所以进行文章与内容的分离
+     * @return mixed
+     * @throws Exception
+     * @throws SuccessNotify
+     */
     public function add()
     {
         $webSiteMenu = Menu::getBarMenus();
-        Common::addWithPost();
+        $data = Params::postCheck();
+        if ($data) {
+            (new ContentModel())->addNews($data);
+            throw new SuccessNotify([
+                'msg' => '添加成功'
+            ]);
+        }
         return $this->fetch('', ['webSiteMenu' => $webSiteMenu]);
     }
 
     public function edit()
     {
         $id = Params::idParams();
-        Common::editWithId();
+        if (Params::postCheck()) {
+            (new ContentModel())->editNews($id,Params::dataParams());
+            throw new SuccessNotify([
+                'msg'=>'编辑成功'
+            ]);
+        }
         $webSiteMenu = Menu::getBarMenus();
-        $result = Db::table('cms_news')->where('id', $id)->find();
+        $result = Db::name('news')->where('id', $id)->find();
+        $result['content'] = Db::name('news_content')->where('news_id', $id)->value('content');
         return $this->fetch('', ['news' => $result, 'webSiteMenu' => $webSiteMenu]);
 
     }
@@ -67,9 +87,9 @@ class Content extends Base
         $positonId = intval($data['position_id']);
         $newsId = $data['push'];
 
-        if(!$newsId||!$positonId){
+        if (!$newsId || !$positonId) {
             throw new ParameterException([
-                'msg'=>'推荐位或者推送文章不能为空'
+                'msg' => '推荐位或者推送文章不能为空'
             ]);
         }
 

@@ -6,6 +6,15 @@
 <form class="layui-form" id="finCms-form" style="padding: 20px 30px 0 0">
     <input name="id" type="hidden" value="{$position.id}">
     <div class="layui-form-item">
+        <label for="type" class="layui-form-label">
+            推荐位类型
+        </label>
+        <div class="layui-input-inline">
+            <input type="text" id="type" name="type" required="" lay-verify="required"
+                   autocomplete="off" class="layui-input" value="{$position.type}">
+        </div>
+    </div>
+    <div class="layui-form-item">
         <label for="name" class="layui-form-label">
             推荐位标题
         </label>

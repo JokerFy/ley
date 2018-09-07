@@ -142,6 +142,6 @@ function getTree($menus, $pid = 0)
  *     'uid'=>'用户id','group_id'=>'用户组id'],
  */
 function getGroups($uid) {
-    $group = Db::table('cms_auth_group_access')->where('uid',$uid)->find();
+    $group = Db::name('auth_group_access')->where('uid',$uid)->find();
     return $group['group_id'];
 }

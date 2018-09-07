@@ -27,7 +27,7 @@ class Pcontent extends Base
     }
 
     public function index(){
-        $positions = Db::table('cms_position')
+        $positions = Db::name('position')
             ->select();
         // 获取推荐位里面的内容
         $data['status'] = array('neq', -1);
@@ -53,7 +53,7 @@ class Pcontent extends Base
         $contents = Db::table('cms_position_content')
             ->where($data)
             ->order('listorder desc,id desc')
-            ->paginate(5);
+            ->paginate(8);
 
         $pages = $contents->render();
         return $this->fetch('',
@@ -70,6 +70,16 @@ class Pcontent extends Base
         $positions = Db::table('cms_position')
             ->select();
         return $this->fetch('',['positions'=>$positions]);
+
+    }
+
+    public function edit(){
+        $id = Params::idParams();
+        Common::editWithId();
+        $positions = Db::name('position')
+            ->select();
+        $pcontent = Db::name('position_content')->where('id',$id)->find();
+        return $this->fetch('',['positions'=>$positions,'pcontent'=>$pcontent]);
 
     }
 

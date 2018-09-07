@@ -47,7 +47,10 @@
             <td>{$vo.create_time|date="Y-m-d",###}</td>
             <td><input type="text" class="layui-input x-sort" name="listorder[{$vo.id}]" value="{$vo.listorder}"></td>
             <td class="td-manage layui-td-center">
-                <a class="layui-btn layui-btn-sm layui-btn-warm" lay-event="view" attr-id="{$vo.id}" onclick="layerForm('预览','edit','420','420',this)">
+                <a class="layui-btn layui-btn-sm" lay-event="edit" attr-id="{$vo.id}" onclick="layerForm('编辑','edit','600','600',this)">
+                    <i class="iconfont icon-edit"></i>编辑
+                </a>
+                <a class="layui-btn layui-btn-sm layui-btn-warm" lay-event="view" attr-id="{$vo.id}" onclick="layerForm('预览','edit','','',this)">
                     <i class="layui-icon">&#xe705;</i>预览
                 </a>
                 <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="del" attr-id="{$vo.id}" onclick="realDelete(this)">

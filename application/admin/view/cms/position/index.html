@@ -10,6 +10,7 @@
         <thead>
         <tr>
             <th>ID</th>
+            <th>推荐位类型</th>
             <th>推荐位名称</th>
             <th>推荐位描述</th>
             <th>加入时间</th>
@@ -20,6 +21,7 @@
         {foreach $list as $vo}
         <tr>
             <td>{$vo.id}</td>
+            <td>{$vo.type}</td>
             <td>{$vo.name}</td>
             <td>{$vo.description}</td>
             <td>{$vo.create_time|date="y-m-d H:i:s",###}</td>

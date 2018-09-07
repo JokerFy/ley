@@ -7,8 +7,10 @@
  */
 
 namespace app\admin\model;
+
 use app\lib\exception\AddException;
 use app\lib\exception\CurdException;
+use think\Db;
 use think\Exception;
 use think\Model;
 
@@ -17,62 +19,36 @@ class Content extends Model
     protected $table = 'cms_news';
     protected $autoWriteTimestamp = true;
 
-    /**
-     * 从数据库中删除
-     * @param $id
-     * @return int
-     * @throws Exception
-     */
-    public function realDel($id)
+    public function addNews($data)
     {
-        try{
-            $res = $this->where('id',$id)->delete();
-            return $res;
-        }
-        catch (Exception $e)
-        {
-            throw new CurdException(
-                [
-                    'msg'=>'删除失败'
-                ]
-            );
+
+        try {
+            Db::startTrans();
+            self::data($data)->allowField(true)->save();//插入主表
+            $newsContent = [
+                'content' => $data['content'],
+                'news_id' => $this->id,
+            ];
+            Db::name('news_content')->insert($newsContent); //插入副表
+            Db::commit();
+        } catch (Exception $ex) {
+            Db::rollback();
+            throw $ex;
         }
     }
 
-    public function add($data){
-        try{
-            $this->data($data)->allowField(true)->save();
-            return $this->id;
-        }catch (Exception $e)
-        {
-            throw new CurdException(
-                [
-                    'msg'=>'添加失败'
-                ]
-            );
+    public function editNews($id,$data)
+    {
+        try {
+            Db::startTrans();
+            $this->allowField(true)->save($data, ['id' => $id]);//更新主表
+            Db::name('news_content')->where('news_id', $id)->update(['content'=>$data['content']]);  //更新副表
+            Db::commit();
+        } catch (Exception $ex) {
+            Db::rollback();
+            throw $ex;
         }
     }
 
-    /**
-     * 更新指定数据
-     * @param $id
-     * @param $data
-     * @return $this
-     * @throws Exception
-     */
-    public function refreshData($id,$data)
-    {
-        try{
-            $this->where('id',$id)->update($data);
-        }
-        catch (Exception $e)
-        {
-            throw new CurdException(
-                [
-                    'msg'=>'更新失败'
-                ]
-            );
-        }
-    }
 
 }

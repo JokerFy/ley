@@ -7,5 +7,6 @@
  */
 
 return[
-    "admin_salt"=>"Ija@81s41a54tT#"
+    "admin_salt"=>"Ija@81s41a54tT#",
+    'img_prefix'=>'http://mylay.cn//images'
 ];
